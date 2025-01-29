@@ -37,7 +37,7 @@
 #include "servers/rendering/renderer_rd/effects/debug_effects.h"
 #include "servers/rendering/renderer_rd/effects/fsr.h"
 #include "servers/rendering/renderer_rd/effects/luminance.h"
-#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 #include "servers/rendering/renderer_rd/effects/metal_fx.h"
 #endif
 #include "servers/rendering/renderer_rd/effects/tone_mapper.h"
@@ -64,7 +64,7 @@ protected:
 	RendererRD::ToneMapper *tone_mapper = nullptr;
 	RendererRD::FSR *fsr = nullptr;
 	RendererRD::VRS *vrs = nullptr;
-#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 	RendererRD::MFXSpatialEffect *mfx_spatial = nullptr;
 #endif
 	double time = 0.0;

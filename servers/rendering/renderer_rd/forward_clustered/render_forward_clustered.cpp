@@ -88,7 +88,7 @@ void RenderForwardClustered::RenderBufferDataForwardClustered::ensure_fsr2(Rende
 	}
 }
 
-#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 bool RenderForwardClustered::RenderBufferDataForwardClustered::ensure_mfx_temporal(RendererRD::MFXTemporalEffect *p_effect) {
 	if (mfx_temporal_context == nullptr) {
 		RendererRD::MFXTemporalEffect::CreateParams params;
@@ -127,7 +127,7 @@ void RenderForwardClustered::RenderBufferDataForwardClustered::free_data() {
 		fsr2_context = nullptr;
 	}
 
-#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 	if (mfx_temporal_context) {
 		memdelete(mfx_temporal_context);
 		mfx_temporal_context = nullptr;
@@ -1749,7 +1749,7 @@ void RenderForwardClustered::_render_scene(RenderDataRD *p_render_data, const Co
 			scale_type = SCALE_FSR2;
 			break;
 		case RS::VIEWPORT_SCALING_3D_MODE_METALFX_TEMPORAL:
-#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 			scale_type = SCALE_MFX;
 #else
 			scale_type = SCALE_NONE;
@@ -2446,8 +2446,7 @@ void RenderForwardClustered::_render_scene(RenderDataRD *p_render_data, const Co
 
 			RD::get_singleton()->draw_command_end_label();
 		} else if (scale_type == SCALE_MFX) {
-			// TODO: does this work on tvOS
-#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 			bool reset = rb_data->ensure_mfx_temporal(mfx_temporal_effect);
 
 			RID exposure;
@@ -4938,7 +4937,7 @@ RenderForwardClustered::RenderForwardClustered() {
 	taa = memnew(RendererRD::TAA);
 	fsr2_effect = memnew(RendererRD::FSR2Effect);
 	ss_effects = memnew(RendererRD::SSEffects);
-#ifdef METAL_ENABLED
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR)
 	motion_vectors_store = memnew(RendererRD::MotionVectorsStore);
 #ifndef TVOS_ENABLED
 	mfx_temporal_effect = memnew(RendererRD::MFXTemporalEffect);
@@ -4962,8 +4961,7 @@ RenderForwardClustered::~RenderForwardClustered() {
 		fsr2_effect = nullptr;
 	}
 
-#ifdef METAL_ENABLED
-#ifndef TVOS_ENABLED
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 	if (mfx_temporal_effect) {
 		memdelete(mfx_temporal_effect);
 		mfx_temporal_effect = nullptr;

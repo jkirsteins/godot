@@ -104,8 +104,8 @@ def configure(env: "SConsEnvironment"):
 
     if env["ios_simulator"]:
         detect_darwin_sdk_path("iossimulator", env)
-        env.Append(ASFLAGS=["-mios-simulator-version-min=12.0"])
-        env.Append(CCFLAGS=["-mios-simulator-version-min=12.0"])
+        env.Append(ASFLAGS=["-mios-simulator-version-min=13.0"])
+        env.Append(CCFLAGS=["-mios-simulator-version-min=13.0"])
         env.Append(CPPDEFINES=["IOS_SIMULATOR"])
     else:
         detect_darwin_sdk_path("ios", env)
