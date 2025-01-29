@@ -79,7 +79,7 @@ def configure(env: "SConsEnvironment"):
     ## Compiler configuration
 
     # Save this in environment for use by other modules
-    if "OSXCROSS_tvos" in os.environ:
+    if "OSXCROSS_TVOS" in os.environ:
         env["osxcross"] = True
 
     env["ENV"]["PATH"] = env["TVOS_TOOLCHAIN_PATH"] + "/Developer/usr/bin/:" + env["ENV"]["PATH"]
