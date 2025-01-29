@@ -31,7 +31,7 @@
 #ifndef METAL_FX_RD_H
 #define METAL_FX_RD_H
 
-#ifdef METAL_ENABLED
+#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
 
 #include "spatial_upscaler.h"
 

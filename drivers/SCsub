@@ -14,7 +14,7 @@ SConscript("windows/SCsub")
 
 # Sounds drivers
 SConscript("alsa/SCsub")
-if env["platform"] == "ios" or env["platform"] == "macos":
+if env["platform"] == "ios" or env["platform"] == "tvos" or env["platform"] == "macos":
     SConscript("coreaudio/SCsub")
 SConscript("pulseaudio/SCsub")
 if env["platform"] == "windows":
@@ -27,7 +27,7 @@ if env["xaudio2"]:
         Exit(255)
     SConscript("xaudio2/SCsub")
 # Shared Apple platform drivers
-if env["platform"] in ["macos", "ios"]:
+if env["platform"] in ["macos", "ios", "tvos"]:
     SConscript("apple/SCsub")
 # Midi drivers
 SConscript("alsamidi/SCsub")

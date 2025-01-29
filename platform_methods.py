@@ -83,6 +83,8 @@ def lipo(prefix, suffix):
     arch_found = 0
 
     for arch in architectures:
+        print("For ", prefix, "testing arch", arch, "suffix", suffix)
+
         bin_name = prefix + "." + arch + suffix
         if Path(bin_name).is_file():
             target_bin = bin_name
@@ -93,6 +95,8 @@ def lipo(prefix, suffix):
         target_bin = prefix + ".fat" + suffix
         lipo_command += ["-output", target_bin]
         subprocess.run(lipo_command)
+    else:
+        print("Arch not found")
 
     return target_bin
 

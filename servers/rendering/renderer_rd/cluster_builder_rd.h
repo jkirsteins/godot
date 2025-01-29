@@ -185,7 +185,7 @@ private:
 	};
 
 	uint32_t cluster_size = 32;
-#if defined(MACOS_ENABLED) || defined(IOS_ENABLED)
+#if defined(MACOS_ENABLED) || defined(IOS_ENABLED) || defined(TVOS_ENABLED)
 	// Results in visual artifacts on macOS and iOS when using MSAA and subgroups.
 	// Using subgroups and disabling MSAA is the optimal solution for now and also works
 	// with MoltenVK.

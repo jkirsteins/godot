@@ -45,6 +45,7 @@ def make_default_controller_mappings(target, source, env):
             "Mac OS X": "#ifdef MACOS_ENABLED",
             "Android": "#ifdef ANDROID_ENABLED",
             "iOS": "#ifdef IOS_ENABLED",
+            "tvOS": "#ifdef TVOS_ENABLED",
             "Web": "#ifdef WEB_ENABLED",
         }
 
