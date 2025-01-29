@@ -4937,11 +4937,9 @@ RenderForwardClustered::RenderForwardClustered() {
 	taa = memnew(RendererRD::TAA);
 	fsr2_effect = memnew(RendererRD::FSR2Effect);
 	ss_effects = memnew(RendererRD::SSEffects);
-#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR)
+#if defined(METAL_ENABLED) && !defined(IOS_SIMULATOR) && !defined(TVOS_SIMULATOR)
 	motion_vectors_store = memnew(RendererRD::MotionVectorsStore);
-#ifndef TVOS_ENABLED
 	mfx_temporal_effect = memnew(RendererRD::MFXTemporalEffect);
-#endif
 #endif
 }
 
@@ -4966,7 +4964,7 @@ RenderForwardClustered::~RenderForwardClustered() {
 		memdelete(mfx_temporal_effect);
 		mfx_temporal_effect = nullptr;
 	}
-#endif
+
 	if (motion_vectors_store) {
 		memdelete(motion_vectors_store);
 		motion_vectors_store = nullptr;
