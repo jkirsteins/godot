@@ -287,7 +287,11 @@ RDD::TextureID RenderingDeviceDriverMetal::texture_create(const TextureFormat &p
 	// Usage.
 
 	MTLResourceOptions options = 0;
+#if TARGET_OS_TV
+	const bool supports_memoryless = (*device_properties).features.highestFamily >= MTLGPUFamilyApple2 && (*device_properties).features.highestFamily < MTLGPUFamilyMac2;
+#else
 	const bool supports_memoryless = (*device_properties).features.highestFamily >= MTLGPUFamilyApple2 && (*device_properties).features.highestFamily < MTLGPUFamilyMac1;
+#endif
 	if (supports_memoryless && p_format.usage_bits & TEXTURE_USAGE_TRANSIENT_BIT) {
 		options = MTLResourceStorageModeMemoryless | MTLResourceHazardTrackingModeTracked;
 		desc.storageMode = MTLStorageModeMemoryless;
@@ -4158,7 +4162,7 @@ Error RenderingDeviceDriverMetal::initialize(uint32_t p_device_index, uint32_t p
 			error_string += "- No support for image cube arrays.\n";
 		}
 
-#if defined(IOS_ENABLED)
+#if defined(IOS_ENABLED) || defined(TVOS_ENABLED)
 		// iOS platform ports currently don't exit themselves when this method returns `ERR_CANT_CREATE`.
 		OS::get_singleton()->alert(error_string + "\nClick OK to exit (black screen will be visible).");
 #else

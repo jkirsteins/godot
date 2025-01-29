@@ -34,7 +34,7 @@
 #include "core/templates/paged_allocator.h"
 #include "servers/rendering/renderer_rd/cluster_builder_rd.h"
 #include "servers/rendering/renderer_rd/effects/fsr2.h"
-#ifdef METAL_ENABLED
+#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
 #include "servers/rendering/renderer_rd/effects/metal_fx.h"
 #endif
 #include "servers/rendering/renderer_rd/effects/motion_vectors_store.h"
@@ -95,7 +95,7 @@ public:
 	private:
 		RenderSceneBuffersRD *render_buffers = nullptr;
 		RendererRD::FSR2Context *fsr2_context = nullptr;
-#ifdef METAL_ENABLED
+#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
 		RendererRD::MFXTemporalContext *mfx_temporal_context = nullptr;
 #endif
 
@@ -141,7 +141,7 @@ public:
 		void ensure_fsr2(RendererRD::FSR2Effect *p_effect);
 		RendererRD::FSR2Context *get_fsr2_context() const { return fsr2_context; }
 
-#ifdef METAL_ENABLED
+#if defined(METAL_ENABLED) && !defined(TVOS_ENABLED)
 		bool ensure_mfx_temporal(RendererRD::MFXTemporalEffect *p_effect);
 		RendererRD::MFXTemporalContext *get_mfx_temporal_context() const { return mfx_temporal_context; }
 #endif
@@ -648,7 +648,9 @@ private:
 	RendererRD::SSEffects *ss_effects = nullptr;
 
 #ifdef METAL_ENABLED
+#ifndef TVOS_ENABLED
 	RendererRD::MFXTemporalEffect *mfx_temporal_effect = nullptr;
+#endif
 #endif
 	RendererRD::MotionVectorsStore *motion_vectors_store = nullptr;
 

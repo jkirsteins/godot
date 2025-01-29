@@ -606,6 +606,8 @@ Dictionary OS_Unix::execute_with_pipe(const String &p_path, const List<String> &
 	// Don't compile this code at all to avoid undefined references.
 	// Actual virtual call goes to OS_Web.
 	ERR_FAIL_V(ret);
+#elif defined(TVOS_ENABLED)
+	ERR_FAIL_V(ret);
 #else
 	// Create pipes.
 	int pipe_in[2] = { -1, -1 };
@@ -690,6 +692,8 @@ Error OS_Unix::execute(const String &p_path, const List<String> &p_arguments, St
 	// Don't compile this code at all to avoid undefined references.
 	// Actual virtual call goes to OS_Web.
 	ERR_FAIL_V(ERR_BUG);
+#elif defined(TVOS_ENABLED)
+	ERR_FAIL_V(ERR_CANT_FORK);
 #else
 	if (r_pipe) {
 		String command = "\"" + p_path + "\"";
@@ -764,6 +768,8 @@ Error OS_Unix::create_process(const String &p_path, const List<String> &p_argume
 	// Don't compile this code at all to avoid undefined references.
 	// Actual virtual call goes to OS_Web.
 	ERR_FAIL_V(ERR_BUG);
+#elif defined(TVOS_ENABLED)
+	ERR_FAIL_V(ERR_CANT_FORK);
 #else
 	pid_t pid = fork();
 	ERR_FAIL_COND_V(pid < 0, ERR_CANT_FORK);

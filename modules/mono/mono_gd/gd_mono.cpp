@@ -414,7 +414,7 @@ godot_plugins_initialize_fn try_load_native_aot_library(void *&r_aot_dll_handle)
 
 #if defined(WINDOWS_ENABLED)
 	String native_aot_so_path = GodotSharpDirs::get_api_assemblies_dir().path_join(assembly_name + ".dll");
-#elif defined(MACOS_ENABLED) || defined(IOS_ENABLED)
+#elif defined(MACOS_ENABLED) || defined(IOS_ENABLED) || defined(TVOS_ENABLED)
 	String native_aot_so_path = GodotSharpDirs::get_api_assemblies_dir().path_join(assembly_name + ".dylib");
 #elif defined(UNIX_ENABLED)
 	String native_aot_so_path = GodotSharpDirs::get_api_assemblies_dir().path_join(assembly_name + ".so");
@@ -523,7 +523,7 @@ void GDMono::initialize() {
 
 	godot_plugins_initialize_fn godot_plugins_initialize = nullptr;
 
-#if !defined(IOS_ENABLED)
+#if !defined(IOS_ENABLED) && !defined(TVOS_ENABLED)
 	// Check that the .NET assemblies directory exists before trying to use it.
 	if (!DirAccess::exists(GodotSharpDirs::get_api_assemblies_dir())) {
 		OS::get_singleton()->alert(vformat(RTR("Unable to find the .NET assemblies directory.\nMake sure the '%s' directory exists and contains the .NET assemblies."), GodotSharpDirs::get_api_assemblies_dir()), RTR(".NET assemblies not found"));

@@ -28,6 +28,7 @@ namespace GodotTools.Utils
             public const string BSD = "BSD";
             public const string Android = "Android";
             public const string iOS = "iOS";
+            public const string tvOS = "tvOS";
             public const string Web = "Web";
         }
 
@@ -41,6 +42,7 @@ namespace GodotTools.Utils
             public const string LinuxBSD = "linuxbsd";
             public const string Android = "android";
             public const string iOS = "ios";
+            public const string tvOS = "tvos";
             public const string Web = "web";
         }
 
@@ -57,6 +59,7 @@ namespace GodotTools.Utils
             public const string Android = "android";
             public const string iOS = "ios";
             public const string iOSSimulator = "iossimulator";
+            public const string tvOSSimulator = "tvossimulator";
             public const string Browser = "browser";
         }
 
@@ -70,6 +73,7 @@ namespace GodotTools.Utils
             ["Linux"] = Platforms.LinuxBSD,
             ["Android"] = Platforms.Android,
             ["iOS"] = Platforms.iOS,
+            ["tvOS"] = Platforms.tvOS,
             ["Web"] = Platforms.Web
         };
 
@@ -83,6 +87,7 @@ namespace GodotTools.Utils
             [Names.BSD] = Platforms.LinuxBSD,
             [Names.Android] = Platforms.Android,
             [Names.iOS] = Platforms.iOS,
+            [Names.tvOS] = Platforms.tvOS,
             [Names.Web] = Platforms.Web
         };
 
@@ -97,6 +102,7 @@ namespace GodotTools.Utils
             [Platforms.LinuxBSD] = DotNetOS.Linux,
             [Platforms.Android] = DotNetOS.Android,
             [Platforms.iOS] = DotNetOS.iOS,
+            [Platforms.tvOS] = DotNetOS.tvOS,
             [Platforms.Web] = DotNetOS.Browser
         };
 
@@ -144,6 +150,8 @@ namespace GodotTools.Utils
         [SupportedOSPlatformGuard("android")] public static bool IsAndroid => _isAndroid.Value;
 
         [SupportedOSPlatformGuard("ios")] public static bool IsiOS => _isiOS.Value;
+
+        [SupportedOSPlatformGuard("tvos")] public static bool IstvOS => _istvOS.Value;
 
         [SupportedOSPlatformGuard("browser")] public static bool IsWeb => _isWeb.Value;
         public static bool IsUnixLike => _isUnixLike.Value;
