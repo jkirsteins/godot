@@ -71,8 +71,11 @@ Error PackedSceneEditorTranslationParserPlugin::parse_file(const String &p_path,
 		// Find the `auto_translate_mode` property.
 		bool auto_translating = true;
 		bool auto_translate_mode_found = false;
+		String translation_context = "";
+
 		for (int j = 0; j < state->get_node_property_count(i); j++) {
 			String property = state->get_node_property_name(i, j);
+
 			// If an old scene wasn't saved in the new version, the `auto_translate` property won't be converted into `auto_translate_mode`,
 			// so the deprecated property still needs to be checked as well.
 			// TODO: Remove the check for "auto_translate" once the property if fully removed.
@@ -110,6 +113,16 @@ Error PackedSceneEditorTranslationParserPlugin::parse_file(const String &p_path,
 				auto_translating = atr_owners[idx_last].second;
 			} else {
 				atr_owners.push_back(Pair(state->get_node_path(i), true));
+			}
+		}
+
+		// TODO: only loop once over the properties (between this and auto_translate_mode)
+		for (int j = 0; j < state->get_node_property_count(i); j++) {
+			String property = state->get_node_property_name(i, j);
+
+			if (property == "translation_context") {
+				translation_context = String(state->get_node_property_value(i, j));
+				break;
 			}
 		}
 
@@ -163,9 +176,10 @@ Error PackedSceneEditorTranslationParserPlugin::parse_file(const String &p_path,
 				}
 			} else if (property_value.get_type() == Variant::STRING) {
 				String str_value = String(property_value);
+				Variant _ctx_value = state->get_node_property_value(i, j);
 				// Prevent reading text containing only spaces.
 				if (!str_value.strip_edges().is_empty()) {
-					r_translations->push_back({ str_value });
+					r_translations->push_back({ str_value, translation_context });
 				}
 			}
 		}

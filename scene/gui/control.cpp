@@ -3254,6 +3254,17 @@ String Control::get_tooltip_text() const {
 	return data.tooltip;
 }
 
+void Control::set_translation_context(const String &p_translation_context) {
+	ERR_MAIN_THREAD_GUARD;
+	data.translation_context = p_translation_context;
+	update_configuration_warnings();
+}
+
+String Control::get_translation_context() const {
+	ERR_READ_THREAD_GUARD_V(String());
+	return data.translation_context;
+}
+
 String Control::get_tooltip(const Point2 &p_pos) const {
 	ERR_READ_THREAD_GUARD_V(String());
 	String ret;
@@ -3596,6 +3607,9 @@ void Control::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_tooltip_text"), &Control::get_tooltip_text);
 	ClassDB::bind_method(D_METHOD("get_tooltip", "at_position"), &Control::get_tooltip, DEFVAL(Point2()));
 
+	ClassDB::bind_method(D_METHOD("set_translation_context", "hint"), &Control::set_translation_context);
+	ClassDB::bind_method(D_METHOD("get_translation_context"), &Control::get_translation_context);
+
 	ClassDB::bind_method(D_METHOD("set_default_cursor_shape", "shape"), &Control::set_default_cursor_shape);
 	ClassDB::bind_method(D_METHOD("get_default_cursor_shape"), &Control::get_default_cursor_shape);
 	ClassDB::bind_method(D_METHOD("get_cursor_shape", "position"), &Control::get_cursor_shape, DEFVAL(Point2()));
@@ -3692,6 +3706,7 @@ void Control::_bind_methods() {
 
 	ADD_GROUP("Localization", "");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "localize_numeral_system"), "set_localize_numeral_system", "is_localizing_numeral_system");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "translation_context", PROPERTY_HINT_MULTILINE_TEXT), "set_translation_context", "get_translation_context");
 
 #ifndef DISABLE_DEPRECATED
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_translate", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_auto_translate", "is_auto_translating");
