@@ -267,6 +267,7 @@ private:
 
 		String tooltip;
 		AutoTranslateMode tooltip_auto_translate_mode = AUTO_TRANSLATE_MODE_INHERIT;
+		String translation_context;
 
 	} data;
 
@@ -328,6 +329,7 @@ private:
 	static int root_layout_direction;
 
 	String get_tooltip_text() const;
+	String get_translation_context() const;
 
 protected:
 	// Dynamic properties.
@@ -339,6 +341,9 @@ protected:
 
 	bool _property_can_revert(const StringName &p_name) const;
 	bool _property_get_revert(const StringName &p_name, Variant &r_property) const;
+
+	// Localization.
+	String _get_translation_context_with_override(const StringName &p_context) const override;
 
 	// Theming.
 
@@ -649,6 +654,7 @@ public:
 	// Extra properties.
 
 	void set_tooltip_text(const String &text);
+	void set_translation_context(const String &text);
 	virtual String get_tooltip(const Point2 &p_pos) const;
 	virtual Control *make_custom_tooltip(const String &p_text) const;
 
